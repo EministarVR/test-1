@@ -54,6 +54,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            flex-wrap: wrap; /* Damit die Navigation in den mobilen Modus passt */
         }
 
         nav a {
@@ -67,6 +68,21 @@
         nav a:hover {
             background: #383838;
             color: #007aff;
+        }
+
+        /* Toggle Button */
+        .toggle-button {
+            display: none; /* Standardmäßig nicht sichtbar */
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+
+        .toggle-button:hover {
+            transform: scale(1.1);
         }
 
         /* Main Container */
@@ -222,6 +238,10 @@
                 text-align: left; /* Text links ausrichten */
             }
 
+            .toggle-button {
+                display: block; /* Sichtbar machen auf mobilen Geräten */
+            }
+
             .container {
                 padding: 20px; /* Weniger Padding auf mobilen Geräten */
             }
@@ -247,31 +267,27 @@
 
     <!-- Navigation Bar -->
     <nav>
-        <a href="#home">Home</a>
-        <a href="#tools">Tools</a>
-        <a href="premium.html">Premium</a>
-        <a href="#about">Über uns</a>
-        <a href="support.html">Support</a> <!-- Verlinkung zur support.html -->
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Suche..." oninput="highlightText()">
-            <button>🔍</button>
+        <button class="toggle-button" onclick="toggleNav()">&#9660;</button> <!-- Pfeil für Einklappen/Ausklappen -->
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#tools">Tools</a>
+            <a href="premium.html">Premium</a>
+            <a href="#about">Über uns</a>
+            <a href="support.html">Support</a> <!-- Verlinkung zur support.html -->
         </div>
-        <div class="cart">🛒</div>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Suchfunktion..." oninput="highlightText()">
+        </div>
     </nav>
 
-    <!-- Main Container -->
+    <!-- Main Content -->
     <div class="container">
-        <h2>Unsere Tools</h2>
-
         <!-- Tools Section -->
-        <div class="tools" id="tools">
+        <h2 id="tools">Nützliche Tools</h2>
+        <div class="tools">
             <div class="tool">
-                <h3>Kalender</h3>
-                <p class="tool-description">Organisiere deine Termine und behalte den Überblick über wichtige Ereignisse.</p>
-            </div>
-            <div class="tool">
-                <h3>Erinnerungen</h3>
-                <p class="tool-description">Setze Erinnerungen, damit du nie wieder etwas vergisst.</p>
+                <h3>Taschenrechner</h3>
+                <p class="tool-description">Ein einfacher Taschenrechner für schnelle Berechnungen.</p>
             </div>
             <div class="tool">
                 <h3>Notizen</h3>
@@ -309,6 +325,19 @@
     </footer>
 
     <script>
+        // Toggle Navigation
+        function toggleNav() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks.style.display === "block") {
+                navLinks.style.display = "none";
+                document.querySelector('.toggle-button').innerHTML = "&#9654;"; // Nach oben zeigen
+            } else {
+                navLinks.style.display = "block";
+                document.querySelector('.toggle-button').innerHTML = "&#9660;"; // Nach unten zeigen
+            }
+        }
+
+        // Highlight Text Function
         function highlightText() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let descriptions = document.querySelectorAll('.tool-description');
